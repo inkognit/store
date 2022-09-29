@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Auth } from './configs/middlewares/auth.middleware';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -6,4 +7,8 @@ import { UserModule } from './modules/user/user.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(Auth).forRoutes('');
+  }
+}
