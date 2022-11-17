@@ -16,7 +16,11 @@
             ],
             "env": {
                 "PORT": "7337",
-                "JWT_SECRET":"m*8&7Ge#fHgxUDWBrX^m*X^m*8&7Ge#F!cJs)Z2Y"
+                "JWT_SECRET": "m*8&7Ge#fHgxUDWBrX^m*X^m*8&7Ge#F!cJs)Z2Y",
+                "DB_PORT": "9876",
+                "DB_HOST": "localhost",
+                "DB_LOG": "",
+                "DB_PASS": ""
             }
         }
     ]

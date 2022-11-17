@@ -1,0 +1,46 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Orders",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Start Docker Postgres",
+                "Build Docker Postgres",
+                "Start ",
+                "Remove Docker Postgres"
+            ]
+        },
+        {
+            "label": "Start",
+            "type": "shell",
+            "command": "docker run --name myDataBase -v \"${input:path}\"/://app -p 5433:5433 -e POSTGRES_PASSWORD=verysecretpassword -e POSTGRES_DB=dockerstoredb -d postgres"
+        },
+        {
+            "label": "Build Docker Postgres",
+            "type": "shell",
+            "command": "docker container create -f some-postgres"
+        },
+        {
+            "label": "Start ",
+            "type": "shell",
+            "command": "docker container create -f some-postgres"
+        },
+        {
+            "label": "Remove Docker Postgres",
+            "type": "shell",
+            "command": "docker container create -f some-postgres"
+        }
+    ],
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "path",
+            "description": "Path to sql file",
+            // "options": [
+            //     "D:\\home\\store\\src\\db"
+            // ],
+            "default": "D:\\home\\store\\src\\db"
+        }
+    ]
+}
