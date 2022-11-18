@@ -7,10 +7,11 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Auth } from './configs/middlewares/auth.middleware';
 import { AuthModule } from './modules/auth/auth.module';
+import { RolesModule } from './modules/roles/roles.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
-  imports: [AuthModule, UserModule],
+  imports: [AuthModule, UserModule, RolesModule],
   controllers: [],
   providers: [ConfigService],
 })
