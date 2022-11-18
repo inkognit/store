@@ -10,6 +10,8 @@
             "name": "dev",
             "console": "integratedTerminal",
             "runtimeExecutable": "npm",
+            "preLaunchTask": "Orders",
+            "postDebugTask": "Remove Docker Postgres",
             "runtimeArgs": [
                 "run",
                 "start:dev"
@@ -19,8 +21,9 @@
                 "JWT_SECRET": "m*8&7Ge#fHgxUDWBrX^m*X^m*8&7Ge#F!cJs)Z2Y",
                 "DB_PORT": "9876",
                 "DB_HOST": "localhost",
-                "DB_LOG": "",
-                "DB_PASS": ""
+                "DB_USERNAME": "testadmin",
+                "DB_PASSWORD": "verysecretpassword",
+                "DB_NAME": "dockerstoredb",
             }
         }
     ]

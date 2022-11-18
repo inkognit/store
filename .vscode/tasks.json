@@ -6,30 +6,29 @@
             "dependsOrder": "sequence",
             "dependsOn": [
                 "Start Docker Postgres",
+                "Sleep for 10 seconds",
                 "Build Docker Postgres",
-                "Start ",
-                "Remove Docker Postgres"
             ]
         },
         {
-            "label": "Start",
+            "label": "Start Docker Postgres",
             "type": "shell",
-            "command": "docker run --name myDataBase -v \"${input:path}\"/://app -p 5433:5433 -e POSTGRES_PASSWORD=verysecretpassword -e POSTGRES_DB=dockerstoredb -d postgres"
+            "command": "docker run --name myDataBase -v \"${input:path}\"/://app -p 9876:5432 -e POSTGRES_USER=testadmin -e POSTGRES_PASSWORD=verysecretpassword -e POSTGRES_DB=dockerstoredb -d postgres"
+        },
+        {
+            "label": "Sleep for 10 seconds",
+            "type": "shell",
+            "command": "ping 127.0.0.1 -n 10"
         },
         {
             "label": "Build Docker Postgres",
             "type": "shell",
-            "command": "docker container create -f some-postgres"
-        },
-        {
-            "label": "Start ",
-            "type": "shell",
-            "command": "docker container create -f some-postgres"
+            "command": "docker exec myDataBase sh -c 'psql -U testadmin -d dockerstoredb < /app/db.sql'"
         },
         {
             "label": "Remove Docker Postgres",
             "type": "shell",
-            "command": "docker container create -f some-postgres"
+            "command": "docker container rm -f myDataBase"
         }
     ],
     "inputs": [
@@ -37,9 +36,9 @@
             "type": "pickString",
             "id": "path",
             "description": "Path to sql file",
-            // "options": [
-            //     "D:\\home\\store\\src\\db"
-            // ],
+            "options": [
+                "D:\\home\\store\\src\\db",
+            ],
             "default": "D:\\home\\store\\src\\db"
         }
     ]
