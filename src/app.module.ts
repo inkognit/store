@@ -4,6 +4,7 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Auth } from './configs/middlewares/auth.middleware';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
@@ -11,7 +12,7 @@ import { UserModule } from './modules/user/user.module';
 @Module({
   imports: [AuthModule, UserModule],
   controllers: [],
-  providers: [],
+  providers: [ConfigService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
