@@ -8,9 +8,10 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger/dist';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { UserResponseDto } from '../dto/user.resp';
 import { UserService } from '../service/user.service';
 
 @ApiTags('Users')
@@ -19,8 +20,9 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    const result = await this.userService.create(createUserDto);
+    return new UserResponseDto(result);
   }
 
   @Get()
