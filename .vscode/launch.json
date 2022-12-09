@@ -18,6 +18,7 @@
             ],
             "env": {
                 "PORT": "7337",
+                "SALT": "jsf5f4er3ds4f2(54256hqasdu6*20q#%!hq(*3(*!&%GDWKH23",
                 "JWT_SECRET": "m*8&7Ge#fHgxUDWBrX^m*X^m*8&7Ge#F!cJs)Z2Y",
                 "DB_PORT": "9876",
                 "DB_HOST": "localhost",

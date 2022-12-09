@@ -2,12 +2,13 @@ CREATE SCHEMA test;
 
 CREATE TABLE test.users(
     id integer NOT NULL,
-    login character varying NOT NULL,
+    login character NOT NULL,
     password character varying NOT NULL,
     first_name character varying NOT NULL,
     middle_name character varying NOT NULL,
     last_name character varying NOT NULL,
     bithday timestamp NOT NULL,
+    refresh_token character varying NOT NULL,
     create_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     update_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP
 );
