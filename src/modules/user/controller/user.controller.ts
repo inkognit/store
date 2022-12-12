@@ -20,7 +20,7 @@ export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Post()
-    async create(@Body() createUserDto: CreateUserDto) {
+    async signUp(@Body() createUserDto: CreateUserDto) {
         const result = await this.userService.signUp(createUserDto);
         return new UserResponseDto(result);
     }

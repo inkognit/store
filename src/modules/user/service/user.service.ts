@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2';
 import { Repository } from 'typeorm';
-import { Users } from '../../../db/entities/user.entity';
+import { Users } from '../../../db/entity';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 
@@ -14,6 +14,7 @@ export class UserService {
     ) {}
     async signUp(createUserDto: CreateUserDto) {
         const user = new Users();
+        user.id;
         user.login = createUserDto.login;
         const salt = Buffer.from(process.env.SALT);
         user.password = await argon2.hash(createUserDto.password, { salt });

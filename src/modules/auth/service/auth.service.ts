@@ -39,6 +39,7 @@ export class AuthService {
                 { expiresIn: '1d' },
             );
             this.userRepo.save(user);
+            return access_token;
         }
         throw 'Нет доступа';
     }

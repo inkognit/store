@@ -1,0 +1,11 @@
+{
+    "type": "psql",
+    "database":"",
+    "synchronize": "false",
+    "entities": [
+      "dist/db/entity/**/*.js"
+    ],
+    "cli": {
+      "entitiesDir": "src/db/entity"
+    }
+  }
