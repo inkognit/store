@@ -3,6 +3,7 @@ import {
     Controller,
     Delete,
     Get,
+    Ip,
     Param,
     Post,
     Query,
@@ -17,8 +18,8 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post()
-    create(@Body() createAuthDto: CreateAuthDto) {
-        return this.authService.signIn(createAuthDto);
+    create(@Body() createAuthDto: CreateAuthDto, @Ip() ip: string) {
+        return this.authService.signIn(createAuthDto, ip);
     }
 
     @Get()

@@ -3,7 +3,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export const setup = (app: INestApplication) => {
     const config = new DocumentBuilder()
-        .setTitle('example')
+        .addBearerAuth()
+        .setTitle('Example')
         .setDescription('The cats API description')
         .setVersion('1.0')
         .addTag('Users', 'APIs for Users test stores')

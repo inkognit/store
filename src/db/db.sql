@@ -8,7 +8,7 @@ CREATE TABLE test.users(
     middle_name varchar (32) NOT NULL,
     last_name varchar (32) NOT NULL,
     bithday timestamp NOT NULL,
-    refresh_token varchar (255) NULL,
+    refresh_token varchar NULL,
     create_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     update_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (login, id)
