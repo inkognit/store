@@ -7,9 +7,9 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2';
-
 import { Repository } from 'typeorm';
 import { Users } from '../../../db/entities/user.entity';
+import { UserResponseDto } from '../../user/dto/user.response';
 import { CreateAuthDto } from '../dto/auth.dto';
 
 @Injectable()
@@ -55,16 +55,17 @@ export class AuthService {
 
             user.refresh_token = refreshToken;
             this.userRepo.save(user);
-            return { access_token, user };
+            return { access_token, user: new UserResponseDto(user) };
         }
         throw new ForbiddenException('Нет доступа');
     }
 
     async refreshToken(access_token: string) {
-        const chek = await this.jwtService.verifyAsync(access_token, {
-            secret: Buffer.from(process.env.JWT_SECRET),
-        });
-        const chek1 = await this.jwtService;
+        // const chek = await this.jwtService.verifyAsync(access_token, {
+        //     secret: Buffer.from(process.env.JWT_SECRET),
+        // });
+        // const chek1 = await this.jwtService;
+        return access_token;
     }
 
     async signOut(id: number) {

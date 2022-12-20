@@ -1,9 +1,10 @@
 import { MiddlewareConsumer, NestModule, RequestMethod } from '@nestjs/common';
 import { Module } from '@nestjs/common/decorators/modules/module.decorator';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as entity from '../../db/entity';
-import { Auth } from '../middlewares/auth.middleware';
+import { SessionMiddleware } from '../middlewares/session.middleware';
 
 @Module({
     imports: [
@@ -24,12 +25,12 @@ import { Auth } from '../middlewares/auth.middleware';
         }),
     ],
     exports: [CoreModule],
-    providers: [ConfigService],
+    providers: [ConfigService, JwtService],
 })
 export class CoreModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
-            .apply(Auth)
+            .apply(SessionMiddleware)
             .exclude({ path: 'auth', method: RequestMethod.POST }, 'auth/(.*)')
             .forRoutes('*');
     }

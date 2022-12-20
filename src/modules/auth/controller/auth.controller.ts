@@ -2,13 +2,14 @@ import {
     Body,
     Controller,
     Delete,
-    Get,
     Ip,
     Param,
+    Patch,
     Post,
     Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { UserResponseDto } from '../../user/dto/user.response';
 import { CreateAuthDto } from '../dto/auth.dto';
 import { AuthService } from '../service/auth.service';
 
@@ -18,17 +19,19 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post()
-    create(@Body() createAuthDto: CreateAuthDto, @Ip() ip: string) {
-        return this.authService.signIn(createAuthDto, ip);
+    async signIn(@Body() createAuthDto: CreateAuthDto, @Ip() ip: string) {
+        const response = await this.authService.signIn(createAuthDto, ip);
+        const user = new UserResponseDto(response.user);
+        return { ...response, user };
     }
 
-    @Get()
-    findAll(@Query() queries) {
+    @Patch()
+    refreshToken(@Query() queries) {
         return this.authService.refreshToken(queries);
     }
 
     @Delete(':id')
-    remove(@Param('id') id: string) {
+    signOut(@Param('id') id: string) {
         return this.authService.signOut(+id);
     }
 }

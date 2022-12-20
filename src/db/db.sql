@@ -2,13 +2,13 @@ CREATE SCHEMA test;
 
 CREATE TABLE test.users(
     id SERIAL,
-    login character (32) NOT NULL,
-    password varchar (255) NOT NULL,
-    first_name varchar (32) NOT NULL,
-    middle_name varchar (32) NOT NULL,
-    last_name varchar (32) NOT NULL,
+    login character varying NOT NULL,
+    password character varying NOT NULL,
+    first_name character varying NOT NULL,
+    middle_name character varying NOT NULL,
+    last_name character varying NOT NULL,
     bithday timestamp NOT NULL,
-    refresh_token varchar NULL,
+    refresh_token character varying,
     create_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     update_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (login, id)

@@ -6,15 +6,16 @@ import {
     Param,
     Patch,
     Post,
-    Query,
+    UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthoGuard } from '../../../configs/guard/auth.guard';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { UserResponseDto } from '../dto/user.resp';
+import { UserResponseDto } from '../dto/user.response';
 import { UserService } from '../service/user.service';
 
-// @ApiBearerAuth()
+@ApiBearerAuth()
 @ApiTags('Users')
 @Controller('users')
 export class UserController {
@@ -27,13 +28,16 @@ export class UserController {
     }
 
     @Get()
-    findAll(@Query() queries) {
-        return this.userService.findAll(queries);
+    @UseGuards(AuthoGuard)
+    async findAll(): Promise<UserResponseDto[]> {
+        const users = await this.userService.findAll();
+        return users.map((user) => new UserResponseDto(user));
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.userService.findOne(+id);
+    async findOne(@Param('id') id: string) {
+        const user = await this.userService.findOne(+id);
+        return new UserResponseDto(user);
     }
 
     @Patch(':id')

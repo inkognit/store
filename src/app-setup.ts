@@ -7,6 +7,7 @@ export const setup = (app: INestApplication) => {
         .setTitle('Example')
         .setDescription('The cats API description')
         .setVersion('1.0')
+        .addTag('Auth', 'APIs for authorize')
         .addTag('Users', 'APIs for Users test stores')
         .build();
     const document = SwaggerModule.createDocument(app, config);
