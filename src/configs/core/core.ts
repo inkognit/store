@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common/decorators/modules/module.decorator';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import Joi from 'joi';
+import * as Joi from 'joi';
 import * as entity from '../../db/entity';
 import { SessionMiddleware } from '../middlewares/session.middleware';
 
@@ -24,6 +24,8 @@ import { SessionMiddleware } from '../middlewares/session.middleware';
             inject: [ConfigService],
         }),
         ConfigModule.forRoot({
+            isGlobal: true,
+            ignoreEnvFile: true,
             validationSchema: Joi.object({
                 PORT: Joi.number().default(7337),
                 SALT: Joi.string().required(),

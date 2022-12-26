@@ -35,17 +35,20 @@ export class UserController {
     }
 
     @Get(':id')
+    @UseGuards(AuthoGuard)
     async findOne(@Param('id') id: string) {
         const user = await this.userService.findOne(+id);
         return new UserResponseDto(user);
     }
 
     @Patch(':id')
+    @UseGuards(AuthoGuard)
     update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
         return this.userService.update(+id, updateUserDto);
     }
 
     @Delete(':id')
+    @UseGuards(AuthoGuard)
     remove(@Param('id') id: string) {
         return this.userService.remove(+id);
     }
