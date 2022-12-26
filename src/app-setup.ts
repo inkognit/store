@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { HttpExceptionFilter } from './configs/filters/http-exeption-filters/http-exeption-filters.filter';
 
 export const setup = (app: INestApplication) => {
     const config = new DocumentBuilder()
@@ -10,6 +11,9 @@ export const setup = (app: INestApplication) => {
         .addTag('Auth', 'APIs for authorize')
         .addTag('Users', 'APIs for Users test stores')
         .build();
+
+    app.useGlobalFilters(new HttpExceptionFilter());
+
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api/openAPI', app, document);
 };
