@@ -21,7 +21,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
                 .json({ message: 'Ошибка обработки БД' });
         }
         // Дописать проверку для статусов и для кодов
-        if (exception?.getStatus()) {
+        if (exception?.getStatus?.()) {
             return res.status(statusCode).json({
                 message: exception.message,
                 code: exception.response.code,
