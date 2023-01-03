@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './configs/filters/http-exeption-filters/http-exeption-filters.filter';
 
@@ -13,7 +13,7 @@ export const setup = (app: INestApplication) => {
         .build();
 
     app.useGlobalFilters(new HttpExceptionFilter());
-
+    app.useGlobalPipes(new ValidationPipe());
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api/openAPI', app, document);
 };
