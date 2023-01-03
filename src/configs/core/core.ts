@@ -1,6 +1,12 @@
-import { MiddlewareConsumer, NestModule, RequestMethod } from '@nestjs/common';
+import {
+    ClassSerializerInterceptor,
+    MiddlewareConsumer,
+    NestModule,
+    RequestMethod,
+} from '@nestjs/common';
 import { Module } from '@nestjs/common/decorators/modules/module.decorator';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
@@ -38,8 +44,15 @@ import { SessionMiddleware } from '../middlewares/session.middleware';
             }),
         }),
     ],
+    providers: [
+        ConfigService,
+        JwtService,
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: ClassSerializerInterceptor,
+        },
+    ],
     exports: [CoreModule],
-    providers: [ConfigService, JwtService],
 })
 export class CoreModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
