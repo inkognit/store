@@ -14,6 +14,7 @@ export const setup = (app: INestApplication) => {
 
     app.useGlobalFilters(new HttpExceptionFilter());
     app.useGlobalPipes(new ValidationPipe());
+
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api/openAPI', app, document);
 };
