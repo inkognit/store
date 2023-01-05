@@ -10,7 +10,10 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
 import * as entity from '../../db/entity';
+import { LoggingInterceptor } from '../logging-interceptor/logging-interceptor.interceptor';
 import { SessionMiddleware } from '../middlewares/session.middleware';
 
 @Module({
@@ -43,6 +46,36 @@ import { SessionMiddleware } from '../middlewares/session.middleware';
                 DB_NAME: Joi.string().required(),
             }),
         }),
+        WinstonModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: async () => ({
+                transports: [
+                    new winston.transports.File({
+                        maxFiles: 1,
+                        maxsize: 104857600,
+                        filename: 'logs/info.log',
+                        format: winston.format.combine(
+                            winston.format(
+                                (info) => info.level === 'info' && info,
+                            )(),
+                        ),
+                        level: 'info',
+                    }),
+                    new winston.transports.File({
+                        maxFiles: 1,
+                        maxsize: 104857600,
+                        filename: 'logs/error.log',
+                        format: winston.format.combine(
+                            winston.format(
+                                (info) => info.level === 'error' && info,
+                            )(),
+                        ),
+                        level: 'error',
+                    }),
+                ],
+            }),
+            inject: [ConfigService],
+        }),
     ],
     providers: [
         ConfigService,
@@ -50,6 +83,10 @@ import { SessionMiddleware } from '../middlewares/session.middleware';
         {
             provide: APP_INTERCEPTOR,
             useClass: ClassSerializerInterceptor,
+        },
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: LoggingInterceptor,
         },
     ],
     exports: [CoreModule],
