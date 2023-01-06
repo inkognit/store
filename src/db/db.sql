@@ -25,7 +25,7 @@ CREATE TABLE test.logs(
     url character,
     method character,
     ip character,
-    message character
+    message character,
     create_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id)
 );
