@@ -18,7 +18,14 @@ INSERT INTO test.users(login, password, first_name, middle_name, last_name, bith
 ('string', '$argon2id$v=19$m=65536,t=3,p=4$anNmNWY0ZXIzZHM0ZjIoNTQyNTZocWFzZHU2KjIwcSMlIWhxKCozKCohJiVHRFdLSDIz$qy4lmIaX0JIfCs7h9Y2MExwMf5dBq5DIvmUwgjkhi9w', 'test', 'test', 'test', '1996-12-02 17:56:55.993732+03', '2022-11-18 10:56:55.993732+03', '2022-11-18 10:56:55.993732+03');
 
 CREATE TABLE test.logs(
-    data character varying NOT NULL,
-    ip character varying,
+    id character NOT NULL,
+    level character NOT NULL,
+    os character,
+    device character,
+    url character,
+    method character,
+    ip character,
+    message character
     create_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
-)
+    PRIMARY KEY(id)
+);
