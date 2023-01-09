@@ -47,9 +47,11 @@ export class LoggingInterceptor implements NestInterceptor {
             data: body.password ? { ...body, password: '********' } : body,
             method: request.method,
             ip: request.ip,
-            os: UAParser(request.headers['user-agent']).os,
-            device: UAParser(request.headers['user-agent']).device,
-            referer: request.headers.request,
+            os: JSON.stringify(UAParser(request.headers['user-agent']).os),
+            device: JSON.stringify(
+                UAParser(request.headers['user-agent']).device,
+            ),
+            referer: request.headers.referer,
             create_at: new Date().toUTCString(),
         };
 
@@ -57,20 +59,16 @@ export class LoggingInterceptor implements NestInterceptor {
             tap(async () => {
                 const log = new Logs();
                 log.level = 'log';
-                log.os = messageData.os.toString();
-                log.device = messageData.device.toString();
+                log.os = messageData.os;
+                log.device = messageData.device;
                 log.url = messageData.referer;
                 log.method = messageData.method;
                 log.ip = messageData.ip;
-                log.message = JSON.stringify(body);
-                try {
-                    await this.logsRepository.save(log);
-                } catch (error) {
-                    console.log(error);
-                }
-
+                log.message = JSON.stringify(messageData.data);
+                await this.logsRepository.save(log);
                 this.logger.info({ ...cutLongString(messageData) });
             }),
+
             catchError(async (err) => {
                 const log = new Logs();
                 log.level = 'error';
@@ -81,7 +79,6 @@ export class LoggingInterceptor implements NestInterceptor {
                 log.ip = messageData.ip;
                 log.message = err.message || JSON.stringify(err);
                 await this.logsRepository.save(log);
-                console.log(log);
                 this.logger.error(log);
                 throw err;
             }),
