@@ -4,6 +4,7 @@ CREATE TABLE test.users(
     id SERIAL,
     login character varying NOT NULL,
     password character varying NOT NULL,
+    roles_id int DEFAULT 1,
     first_name character varying NOT NULL,
     middle_name character varying NOT NULL,
     last_name character varying NOT NULL,
@@ -37,3 +38,15 @@ INSERT INTO test.logs ("level",os,device,url,"method",ip,message,create_at) VALU
 	 ('log','{"name":"Windows","version":"10"}','{}',NULL,'GET','::1','{}','2023-01-09 10:07:23.369379+03'),
 	 ('log','{"name":"Windows","version":"10"}','{}',NULL,'GET','::1','{}','2023-01-09 10:07:50.346263+03'),
 	 ('error','{"name":"Windows","version":"10"}','{}',NULL,'GET','::1','Такой пользователь не найден','2023-01-09 10:08:02.426444+03');
+
+CREATE TABLE test.roles (
+	id serial4 NOT NULL,
+	"name" varchar NOT NULL,
+	access_level serial4 NOT NULL,
+    user_create int DEFAULT 0,
+    user_update int DEFAULT 0,
+    create_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    update_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(id)
+);
+
