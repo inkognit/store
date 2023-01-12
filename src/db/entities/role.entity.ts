@@ -1,4 +1,4 @@
 import { Entity } from 'typeorm';
 
-@Entity({ name: '', schema: '' })
+@Entity({ name: 'roles', schema: 'test' })
 export class Role {}
