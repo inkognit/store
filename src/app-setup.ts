@@ -1,8 +1,10 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from './configs/filters/http-exeption-filters/http-exeption-filters.filter';
 
 export const setup = (app: INestApplication) => {
+    app.use(cookieParser());
     const config = new DocumentBuilder()
         .addBearerAuth()
         .setTitle('Example')
