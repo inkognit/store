@@ -16,6 +16,7 @@ export const setup = (app: INestApplication) => {
         .addTag('Auth', 'APIs for authorize')
         .addTag('Users', 'APIs for Users test stores')
         .addTag('Roles', 'APIs for CRUD roles')
+        .addTag('Reports', 'APIs for CRUD & analisate reports')
         .build();
 
     app.useGlobalFilters(new HttpExceptionFilter());
