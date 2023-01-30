@@ -1,8 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    OneToOne,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Role } from './role.entity';
 
 @Entity('users', { schema: 'test' })
 export class Users {
-    @PrimaryGeneratedColumn({ comment: 'User id' })
+    @PrimaryGeneratedColumn({ comment: 'User id', name: 'user_id' })
     id: number;
 
     @Column({ comment: 'User login' })
@@ -25,6 +32,13 @@ export class Users {
 
     @Column({ nullable: true })
     refresh_token: string;
+
+    @Column({ comment: 'Role id' })
+    roles_id: number;
+
+    @OneToOne(() => Role)
+    @JoinColumn({ name: 'roles_id' })
+    role: Role;
 
     @Column({
         comment: 'Date create',
