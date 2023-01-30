@@ -19,11 +19,6 @@ export class LogsService {
                     a.indexOf('api/booking/open') != -1 &&
                     a.indexOf('Bearer ') != -1,
             );
-            // const q = await newArr.filter(
-            //     (qy) => JSON.parse(qy)['authorization'],
-            // );
-            // const a = JSON.parse(newArr[newArr.length - 1]);
-            // return a;    latitude":53.890622,"longitude
 
             const [r] = await Promise.all([
                 newArr.map((n) => ({
