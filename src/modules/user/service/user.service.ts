@@ -43,6 +43,7 @@ export class UserService {
         user.middle_name = createUserDto.middle_name;
         user.last_name = createUserDto.last_name;
         user.bithday = createUserDto.bithday;
+        user.avatar = createUserDto.avatar;
         return await this.usersRepository.save(user);
     }
 
@@ -79,11 +80,13 @@ export class UserService {
                 salt,
             });
             if (access) user.password = await argon2.hash(password, { salt });
-            user.first_name = updateData.first_name;
-            user.middle_name = updateData.middle_name;
-            user.last_name = updateData.last_name;
-            user.bithday = updateData.bithday;
         }
+        user.first_name = updateData.first_name;
+        user.middle_name = updateData.middle_name;
+        user.last_name = updateData.last_name;
+        user.bithday = updateData.bithday;
+        user.avatar = updateData.avatar;
+        user.update_at = new Date();
         return this.usersRepository.save(user);
     }
 

@@ -1,9 +1,11 @@
 import {
     Column,
+    CreateDateColumn,
     Entity,
     JoinColumn,
     OneToOne,
     PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from 'typeorm';
 import { Role } from './role.entity';
 
@@ -36,11 +38,14 @@ export class Users {
     @Column({ comment: 'Role id' })
     roles_id: number;
 
+    @Column({ comment: 'User avatar', nullable: true })
+    avatar: string;
+
     @OneToOne(() => Role)
     @JoinColumn({ name: 'roles_id' })
     role: Role;
 
-    @Column({
+    @CreateDateColumn({
         comment: 'Date create',
         type: 'timestamptz',
         default: () => 'NOW()',
@@ -48,7 +53,7 @@ export class Users {
     })
     create_at: Date;
 
-    @Column({
+    @UpdateDateColumn({
         comment: 'Date update',
         type: 'timestamptz',
         default: () => 'NOW()',

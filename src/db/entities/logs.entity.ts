@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('logs', { schema: 'test' })
 export class Logs {
@@ -26,7 +31,7 @@ export class Logs {
     @Column({ comment: 'IP client adress' })
     ip: string;
 
-    @Column({
+    @CreateDateColumn({
         comment: 'Date create',
         type: 'timestamptz',
         default: () => 'NOW()',

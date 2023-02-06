@@ -26,4 +26,9 @@ export class UpdateUserDto {
     @IsOptional()
     @IsDateString()
     bithday?: Date;
+
+    @ApiPropertyOptional({ description: 'User avatar' })
+    @IsOptional()
+    @IsString()
+    avatar?: string;
 }

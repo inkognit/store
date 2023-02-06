@@ -76,8 +76,6 @@ export class AuthoGuard implements CanActivate {
                             return true;
                         }
                     }
-
-                    // return result;
                 }
             }
             throw new ForbiddenException('Доступ запрещен');
