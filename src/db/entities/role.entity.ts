@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'roles', schema: 'test' })
 export class Role {
@@ -17,7 +23,7 @@ export class Role {
     @Column({ comment: 'Update user ID' })
     user_update: number;
 
-    @Column({
+    @CreateDateColumn({
         comment: 'Date create',
         type: 'timestamptz',
         default: () => 'NOW()',
@@ -25,7 +31,7 @@ export class Role {
     })
     create_at: Date;
 
-    @Column({
+    @UpdateDateColumn({
         comment: 'Date update',
         type: 'timestamptz',
         default: () => 'NOW()',

@@ -28,6 +28,10 @@ export class UserResponseDto {
     bithday: Date;
 
     @Expose()
+    @ApiProperty({ description: 'User avatar' })
+    avatar: string;
+
+    @Expose()
     @ApiProperty({ description: 'User created' })
     create_at: Date;
 

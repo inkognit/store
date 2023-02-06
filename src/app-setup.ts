@@ -2,10 +2,15 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 // import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
+import { json, urlencoded } from 'express';
 import { HttpExceptionFilter } from './configs/filters/http-exeption-filters/http-exeption-filters.filter';
 
 export const setup = (app: INestApplication) => {
     app.use(cookieParser());
+    app.setGlobalPrefix('api');
+    app.use(json({ limit: '50mb' }));
+    app.use(urlencoded({ extended: true, limit: '50mb' }));
+
     // app.use(compression()); // Необходим для сжатия больших объемов. Потому лучше не использовать где попало
 
     const config = new DocumentBuilder()
