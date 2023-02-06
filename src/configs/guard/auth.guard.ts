@@ -36,7 +36,6 @@ export class AuthoGuard implements CanActivate {
             }
         } catch (error) {
             if (error.expiredAt) {
-                const req = context.switchToHttp().getRequest();
                 if (req.headers && req.headers.authorization) {
                     const { authorization } = req.headers;
                     const result = this.jwtService.decode(
@@ -45,7 +44,7 @@ export class AuthoGuard implements CanActivate {
                     if (result && typeof result == 'object' && result.user_id) {
                         const user = await this.userRepository.findOne({
                             where: {
-                                id: result.id,
+                                id: result.user_id,
                             },
                             select: {
                                 refresh_token: true,

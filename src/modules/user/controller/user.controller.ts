@@ -23,33 +23,38 @@ export class UserController {
 
     @Post()
     async signUp(@Body() createUserDto: CreateUserDto) {
-        const result = await this.userService.signUp(createUserDto);
-        return new UserResponseDto(result);
+        const user = await this.userService.signUp(createUserDto);
+        return new UserResponseDto(user);
     }
 
     @Get()
     @UseGuards(AuthoGuard)
-    async findAll(): Promise<UserResponseDto[]> {
-        const users = await this.userService.findAll();
-        return users.map((user) => new UserResponseDto(user));
+    async findAll(): Promise<{ data: UserResponseDto[]; total: number }> {
+        const [users, total] = await this.userService.findAll();
+        return { data: users.map((user) => new UserResponseDto(user)), total };
     }
 
     @Get(':id')
     @UseGuards(AuthoGuard)
-    async findOne(@Param('id') id: string) {
-        const user = await this.userService.findOne(+id);
+    async findOne(@Param('id') id: number) {
+        const user = await this.userService.findOne(id);
         return new UserResponseDto(user);
     }
 
     @Patch(':id')
     @UseGuards(AuthoGuard)
-    update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-        return this.userService.update(+id, updateUserDto);
+    async update(
+        @Param('id') id: number,
+        @Body() updateUserDto: UpdateUserDto,
+    ) {
+        const user = await this.userService.update(id, updateUserDto);
+        return new UserResponseDto(user);
     }
 
     @Delete(':id')
     @UseGuards(AuthoGuard)
-    remove(@Param('id') id: string) {
-        return this.userService.remove(+id);
+    async remove(@Param('id') id: number) {
+        await this.userService.remove(id);
+        return { message: 'Аккаунт удален' };
     }
 }
