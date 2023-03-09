@@ -1,0 +1,27 @@
+version: '3.8'
+services:  
+  api:    
+    container_name: api
+    restart: always
+    build: . 
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - db
+    volumes:
+    - .:/app
+  db:
+    container_name: postgres
+    image: postgres
+    ports:
+      - '5433:${DB_PORT}'
+    environment:
+      - DB_HOST="127.0.0.1"
+      - DB_USERNAME="testadmin"
+      - DB_PASSWORD="verysecretpassword"
+      - DB_NAME="dockerstoredb"
+    volumes:
+      # When the PostgreSQL container is started it will run any scripts
+      # provided in the `docker-entrypoint-initdb.d` directory, this connects
+      # our seed file to that directory so that it gets run
+      - ./db.sql:/docker-entrypoint-initdb.d/db/db.sql
