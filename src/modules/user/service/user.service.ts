@@ -79,8 +79,11 @@ export class UserService {
             const access = await argon2.verify(user.password, password, {
                 salt,
             });
-            if (access)
+            if (access) {
                 user.password = await argon2.hash(new_password, { salt });
+            } else {
+                throw new BadRequestException('Ошибка изменения пароля');
+            }
         }
         user.first_name = updateData.first_name;
         user.middle_name = updateData.middle_name;
