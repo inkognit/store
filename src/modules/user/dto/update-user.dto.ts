@@ -9,10 +9,10 @@ export class UpdateUserDto extends OmitType(CreateUserDto, [
     @ApiPropertyOptional({ description: 'User Password' })
     @IsString()
     @IsOptional()
-    password: string;
+    password?: string;
 
     @ApiPropertyOptional({ description: 'User Password' })
     @IsString()
     @IsOptional()
-    new_password: string;
+    new_password?: string;
 }
