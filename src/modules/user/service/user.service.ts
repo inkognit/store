@@ -73,13 +73,17 @@ export class UserService {
         if (!user) {
             throw new NotFoundException('Такой пользователь не найден');
         }
-        const { password } = updateData;
+        const { password, new_password } = updateData;
         if (password) {
             const salt = Buffer.from(process.env.SALT);
             const access = await argon2.verify(user.password, password, {
                 salt,
             });
-            if (access) user.password = await argon2.hash(password, { salt });
+            if (access) {
+                user.password = await argon2.hash(new_password, { salt });
+            } else {
+                throw new BadRequestException('Ошибка изменения пароля');
+            }
         }
         user.first_name = updateData.first_name;
         user.middle_name = updateData.middle_name;
