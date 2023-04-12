@@ -143,10 +143,10 @@ CREATE TABLE test.users (
 
 CREATE TABLE test.chat (
 	id serial4 NOT NULL,
-	sender_id int4 NOT NULL,
-	recipient_id int4 NOT NULL,
+	creator_id int4 NOT NULL,
 	status int4 NOT NULL DEFAULT 1,
-	is_edition bool NOT NULL DEFAULT false,
+	name varchar NULL,
+	avatar text NULL,
 	create_at timestamp(3) NULL DEFAULT CURRENT_TIMESTAMP,
 	update_at timestamp(3) NULL,
 	CONSTRAINT chat_pkey PRIMARY KEY (id)
@@ -168,6 +168,14 @@ CREATE TABLE test.users_chats (
 	CONSTRAINT users_chats_user_id_fkey FOREIGN KEY (user_id) REFERENCES test.users(user_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+CREATE TABLE test.security_guard (
+	id int4 NOT NULL,
+	user_id int4 NOT NULL,
+	refresh_token varchar NOT NULL,
+	ip varchar NOT NULL,
+	device varchar NOT NULL,
+)
+
 -- test.messages definition
 
 -- Drop table
@@ -177,7 +185,8 @@ CREATE TABLE test.users_chats (
 CREATE TABLE test.messages (
 	id serial4 NOT NULL,
 	sender_id int4 NOT NULL,
-	"text" text NOT NULL,
+	"text" text NOT NULL,	
+	is_edition bool NOT NULL DEFAULT false,
 	create_at timestamp(3) NULL DEFAULT CURRENT_TIMESTAMP,
 	update_at timestamp(3) NULL,
 	chat_id int4 NOT NULL,
