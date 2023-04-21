@@ -173,8 +173,8 @@ CREATE TABLE test.security_guard (
 	user_id int4 NOT NULL,
 	refresh_token varchar NOT NULL,
 	ip varchar NOT NULL,
-	device varchar NOT NULL,
-)
+	device varchar NOT NULL
+);
 
 -- test.messages definition
 
@@ -191,7 +191,7 @@ CREATE TABLE test.messages (
 	update_at timestamp(3) NULL,
 	chat_id int4 NOT NULL,
 	CONSTRAINT messages_pkey PRIMARY KEY (id),
-	CONSTRAINT messages_chat_id_fkey FOREIGN KEY (chat_id) REFERENCES test.chat(id) ON DELETE RESTRICT ON UPDATE CASCADE
+	CONSTRAINT messages_chat_id_fkey FOREIGN KEY (chat_id) REFERENCES test.chat(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO

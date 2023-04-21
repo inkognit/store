@@ -9,7 +9,7 @@ import {
     Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { UserResponseDto } from '../../user/dto/user.response';
+import { UserResponseDto } from '../../users/dto/user.response';
 import { CreateAuthDto } from '../dto/auth.dto';
 import { AuthService } from '../service/auth.service';
 

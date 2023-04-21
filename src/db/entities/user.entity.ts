@@ -3,10 +3,13 @@ import {
     CreateDateColumn,
     Entity,
     JoinColumn,
+    JoinTable,
+    ManyToMany,
     OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import { ChatsControl } from './chats-control.entity';
 import { Role } from './role.entity';
 
 @Entity('users', { schema: 'test' })
@@ -60,4 +63,18 @@ export class Users {
         nullable: true,
     })
     update_at: Date;
+
+    @ManyToMany(() => ChatsControl, (chat) => chat.users, { eager: true })
+    @JoinTable({
+        name: 'users_chats',
+        joinColumn: {
+            name: 'user_id',
+            referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+            name: 'chat_id',
+            referencedColumnName: 'id',
+        },
+    })
+    chats: ChatsControl[];
 }

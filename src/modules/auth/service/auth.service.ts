@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2';
 import { Repository } from 'typeorm';
 import { Users } from '../../../db/entities/user.entity';
-import { UserResponseDto } from '../../user/dto/user.response';
+import { UserResponseDto } from '../../users/dto/user.response';
 import { CreateAuthDto } from '../dto/auth.dto';
 
 @Injectable()
