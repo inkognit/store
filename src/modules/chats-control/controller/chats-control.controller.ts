@@ -6,10 +6,12 @@ import {
     Param,
     Patch,
     Post,
+    Session,
     UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthoGuard } from '../../../configs/guard/auth.guard';
+import { TSession } from '../../../configs/interfaces/types';
 import { CreateChatsControlDto } from '../dto/create-chats-control.dto';
 import { UpdateChatsControlDto } from '../dto/update-chats-control.dto';
 import { ChatsService } from '../services/chats-control.service';
@@ -22,10 +24,14 @@ export class ChatsController {
     constructor(private readonly chatsControlService: ChatsService) {}
 
     @Post()
-    async create(@Body() createChatsControlDto: CreateChatsControlDto) {
-        const chat = await this.chatsControlService.create(
-            createChatsControlDto,
-        );
+    async create(
+        @Body() createChatsControlDto: CreateChatsControlDto,
+        @Session() session: TSession,
+    ) {
+        const chat = await this.chatsControlService.create({
+            ...createChatsControlDto,
+            creator_id: session.user_id,
+        });
         return chat;
     }
 

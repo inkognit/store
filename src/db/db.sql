@@ -2,6 +2,10 @@
 
 CREATE SCHEMA test AUTHORIZATION testadmin;
 
+-- DROP SCHEMA test_chat;
+
+CREATE SCHEMA test_chat AUTHORIZATION testadmin;
+
 -- DROP SEQUENCE test.logs_id_seq;
 
 CREATE SEQUENCE test.logs_id_seq

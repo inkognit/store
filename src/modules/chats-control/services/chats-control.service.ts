@@ -1,10 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { ChatsControl, Messages, Users } from '../../../db/entity';
 import { CreateChatsControlDto } from '../dto/create-chats-control.dto';
 import { UpdateChatsControlDto } from '../dto/update-chats-control.dto';
 
 @Injectable()
 export class ChatsService {
-    create(createChatsControlDto: CreateChatsControlDto) {
+    constructor(
+        @InjectRepository(ChatsControl)
+        private readonly chatReposytory: Repository<ChatsControl>,
+        @InjectRepository(Users)
+        private readonly usersReposytory: Repository<Users>,
+        @InjectRepository(Messages)
+        private readonly messageReposytory: Repository<Messages>,
+    ) {}
+
+    async create(createChatsControlDto: CreateChatsControlDto) {
+        const recipient = await this.usersReposytory.find({
+            where: { id: createChatsControlDto.recipient_id },
+        });
+        if (!recipient) throw new NotFoundException('Пользователь не найден');
+        const chat = new ChatsControl();
+        chat.avatar = createChatsControlDto.avatar;
+        chat.creator_id = createChatsControlDto.creator_id;
+        chat.name = createChatsControlDto.name;
+        chat.status = createChatsControlDto.status;
+
+        await this.chatReposytory.save(chat);
         return 'This action adds a new chatsControl';
     }
 

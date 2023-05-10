@@ -36,6 +36,7 @@ export class AuthoGuard implements CanActivate {
             }
         } catch (error) {
             if (error.expiredAt) {
+                //"TokenExpiredError"
                 if (req.headers && req.headers.authorization) {
                     const { authorization } = req.headers;
                     const result = this.jwtService.decode(

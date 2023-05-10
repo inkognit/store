@@ -33,6 +33,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.1.2",
     "@nestjs/typeorm": "^9.0.1",
+    "@nestjs/websockets": "^9.4.0",
     "@types/ua-parser-js": "^0.7.36",
     "argon2": "^0.30.2",
     "buffer": "^6.0.3",
@@ -50,6 +51,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "socket.io": "^4.6.1",
     "typeorm": "^0.3.11",
     "ua-parser-js": "^1.0.32",
     "winston": "^3.8.2"

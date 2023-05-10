@@ -21,9 +21,15 @@ export class AuthService {
     ) {}
 
     async signIn(createAuthDto: CreateAuthDto, ip: string) {
-        const user = await this.userRepo.findOne({
-            where: { login: createAuthDto.login },
-        });
+        let user;
+        try {
+            user = await this.userRepo.findOne({
+                where: { login: createAuthDto.login },
+            });
+        } catch (error) {
+            console.error(error);
+        }
+
         if (!user) {
             throw new NotFoundException('Такого пользователя не существует');
         }
