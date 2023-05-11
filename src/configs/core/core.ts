@@ -12,14 +12,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
-import { Logs } from '../../db/entities/logs.entity';
 import * as entity from '../../db/entity';
+import { Logs, Sessions } from '../../db/entity';
 import { LoggingInterceptor } from '../logging-interceptor/logging-interceptor.interceptor';
 import { SessionMiddleware } from '../middlewares/session.middleware';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Logs]),
+        TypeOrmModule.forFeature([Logs, Sessions]),
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
             useFactory: (consigService: ConfigService) => ({

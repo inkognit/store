@@ -3,11 +3,13 @@ import {
     CreateDateColumn,
     Entity,
     JoinColumn,
+    OneToMany,
     OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
 import { Role } from './role.entity';
+import { Sessions } from './sessions.entity';
 
 @Entity('users', { schema: 'test' })
 export class Users {
@@ -60,6 +62,9 @@ export class Users {
         nullable: true,
     })
     update_at: Date;
+
+    @OneToMany(() => Sessions, (session) => session.user)
+    sessions: Sessions[];
 
     // @ManyToMany(() => ChatsControl, (chat) => chat.users, { eager: true })
     // @JoinTable({

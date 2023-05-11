@@ -3,11 +3,12 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from '../../db/entities/user.entity';
+import { Sessions } from '../../db/entity';
 import { UserController } from './controller/user.controller';
 import { UserService } from './service/user.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Users])],
+    imports: [TypeOrmModule.forFeature([Users, Sessions])],
     controllers: [UserController],
     providers: [UserService, JwtService, ConfigService],
 })

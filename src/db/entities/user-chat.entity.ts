@@ -1,7 +1,16 @@
-import { Column, CreateDateColumn, Entity, UpdateDateColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('users_chats', { schema: 'test' })
 export class UserChats {
+    @PrimaryGeneratedColumn({ comment: 'id' })
+    id: number;
+
     @Column({ comment: 'User id' })
     user_id: number;
 
