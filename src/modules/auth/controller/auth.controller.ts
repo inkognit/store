@@ -2,6 +2,7 @@ import {
     Body,
     Controller,
     Delete,
+    Headers,
     Ip,
     Param,
     Patch,
@@ -9,20 +10,27 @@ import {
     Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { UserResponseDto } from '../../user/dto/user.response';
+import { UserResponseDto } from '../../users/dto/user.response';
 import { CreateAuthDto } from '../dto/auth.dto';
 import { AuthService } from '../service/auth.service';
 
 @ApiTags('Auth')
-@Controller('auth')
+@Controller('')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
-    @Post()
-    async signIn(@Body() createAuthDto: CreateAuthDto, @Ip() ip: string) {
-        const response = await this.authService.signIn(createAuthDto, ip);
-        const user = new UserResponseDto(response.user);
-        return { ...response, user };
+    @Post('sign-in')
+    async signIn(
+        @Body() createAuthDto: CreateAuthDto,
+        @Ip() ip: string,
+        @Headers() headers,
+    ) {
+        const response = await this.authService.signIn(
+            createAuthDto,
+            ip,
+            headers['user-agent'],
+        );
+        return { ...response, user: new UserResponseDto(response.user) };
     }
 
     @Patch()

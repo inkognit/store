@@ -4,7 +4,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { LogsModule } from './modules/log/logs.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { RolesModule } from './modules/roles/roles.module';
-import { UserModule } from './modules/user/user.module';
+import { UserModule } from './modules/users/user.module';
 
 @Module({
     imports: [
